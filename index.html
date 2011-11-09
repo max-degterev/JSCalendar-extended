@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendar extended</title>
+    <link rel="stylesheet" href="static/reset.css">
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div id="main">
+        
+        <div class="calendar-wrap">
+            <div class="calendar">
+                <div class="calendar-list"><!-- Inserted by JS --></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="static/jquery-1.7.js"></script>
+    <script src="static/calendar.js"></script>
+    <script src="static/script.js"></script>
+    <script>
+        $('.calendar-list').append(Calendar.generate({
+            start: {
+                month: 11,
+                year: 2011
+            },
+            end: {
+                month: 10,
+                year: 2012
+            },
+            classes: 'cf',
+            type: 'list',
+            labels: true
+        }));
+    </script>
+</body>
+</html>
