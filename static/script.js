@@ -24,7 +24,7 @@ O.calendarSlider = function() {
         s_height = control.height(),
         q = (s_height / c_height);
         
-    console.log(s_height, c_height, (s_height / c_height));
+    //console.log(s_height, c_height, (s_height / c_height));
         
     slider.draggable({
         addClasses: false,
