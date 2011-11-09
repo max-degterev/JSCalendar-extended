@@ -96,7 +96,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
         
         .calendar-crop .controls {
             width: 9px;
-            height: 200px;
+            height: 100%;
             
             position: absolute;
             right: 4px;
