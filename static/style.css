@@ -107,7 +107,12 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
         }
             .calendar-crop .controls .slider {
                 width: 9px;
-                height: 45px;
+                height: 41px;
+                
+                position: absolute;
+                left: 0;
+                top: 0;
+
                 display: block;
                 cursor: pointer;
                 background: transparent url('sprite_deals.png') -4px -296px no-repeat;
@@ -170,7 +175,8 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
         border-left: 1px solid rgba(0, 0, 0, .05);
     }
     .calendar li.past,
-    .calendar li.empty {
+    .calendar li.empty,
+    .calendar li.weekend.past {
         background: #f5f5f6;
         color: #d7d7d7;
     }
@@ -183,15 +189,15 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
         .calendar li strong {
             min-width: 40px;
             height: 12px;
-            
+
             margin-top: -12px;
-            
+
             position: absolute;
             right: 0;
             top: 0;
 
             display: block;
-            
+
             text-align: center;
             line-height: 10px;
             font-weight: normal;
