@@ -62,7 +62,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
     color: #000;
 }
     .calendar-crop {
-        width: 300px;
+        width: 295px;
         height: 200px;
         
         position: relative;
@@ -99,7 +99,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
             height: 100%;
             
             position: absolute;
-            right: 4px;
+            right: 0;
             top: 0;
             z-index: 550;
             
