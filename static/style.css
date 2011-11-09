@@ -54,51 +54,165 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
 
     background: transparent url('gray_noisy_bg.png') repeat;
 }
-.calendar {
-    width: 140px;
+.calendar-wrap {
     margin: 30px auto;
-    text-align: right;
+    text-align: center;
     
-    color: #333;
+    font-size: 13px;
+    color: #000;
 }
-    td span {
-        width: 20px;
-        height: 20px;
-        display: block;
+    .calendar-crop {
+        width: 300px;
+        height: 200px;
+        
+        position: relative;
+        overflow: hidden;
+        
+        border-top: 1px solid #959595;
+        border-bottom: 1px solid #959595;
     }
-    li {
-        width: 20px;
-        height: 20px;
+        .calendar-crop:before,
+        .calendar-crop:after {
+            width: 240px;
+            height: 1px;
+
+            content: '';
+            display: block;
+            
+            position: absolute;
+            left: 20px;
+            top: 0;
+            
+            z-index: 500;
+
+            -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,1);
+               -moz-box-shadow: 0 0 10px 0 rgba(0,0,0,1);
+                    box-shadow: 0 0 10px 0 rgba(0,0,0,1);
+        }
+        .calendar-crop:after {
+            top: auto;
+            bottom: 0;
+        }
+        
+        .calendar-crop .controls {
+            width: 9px;
+            height: 200px;
+            
+            position: absolute;
+            right: 4px;
+            top: 0;
+            z-index: 550;
+            
+            background: transparent url('deals_cal_controls_bg.png') center 0 repeat-y;
+        }
+            .calendar-crop .controls .slider {
+                width: 9px;
+                height: 45px;
+                display: block;
+                cursor: pointer;
+                background: transparent url('sprite_deals.png') -4px -296px no-repeat;
+            }
+
+        .calendar {
+            width: 280px;
+            margin: -1px 0 0 -1px; /* borders compensation */
+
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            background: #fff;
+        }
+    .day-labels {
+        overflow: hidden;
+    }
+        .day-labels li {
+            width: 40px;
+            height: 30px;
+
+            display: block;
+            float: left;
+        
+            line-height: 30px;
+            font-size: 11px;
+            
+            color: #3e3e3e;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+        }
+        .day-labels li.weekend {
+            color: #7c0000;
+        }
+    
+    .calendar li {
+        width: 39px;
+        height: 35px;
         display: block;
         float: left;
+        
+        line-height: 36px;
+
+        border-left: 1px solid #f0f0f0;
+        border-top: 1px solid #f0f0f0;
+        border-left: 1px solid rgba(0, 0, 0, .05);
+        border-top: 1px solid rgba(0, 0, 0, .05);
     }
-    .firstweek {
-        height: 19px;
-        border-top: 1px solid #993333;
+    
+    .calendar li.firstweek {
+        border-top: 1px solid #c8c8c8;
+        border-top: 1px solid rgba(0, 0, 0, .3);
     }
-    li[data-started] {
-        width: 19px;
-        border-left: 1px solid #993333;
+    .calendar li[data-started] {
+        border-left: 1px solid #c8c8c8;
+        border-left: 1px solid rgba(0, 0, 0, .3);
     }
-    li[data-started].monday {
-        width: 20px;
-        border-left: none;
+    .calendar li[data-started].monday {
+        border-left: 1px solid #f0f0f0;
+        border-left: 1px solid rgba(0, 0, 0, .05);
     }
-    .past {
-        color: #999;
+    .calendar li.past,
+    .calendar li.empty {
+        background: #f5f5f6;
+        color: #d7d7d7;
     }
-    .monthlabel {
+    .calendar li.weekend {
+        color: #940000;
+    }
+    .calendar li.monthlabel {
         position: relative;
     }
-        strong {
-            margin-left: 5px;
+        .calendar li strong {
+            min-width: 40px;
+            height: 12px;
+            
+            margin-top: -12px;
+            
             position: absolute;
-            left: 100%;
+            right: 0;
             top: 0;
-            display: inline-block;
-        }
-/* End timer styles */
 
+            display: block;
+            
+            text-align: center;
+            line-height: 10px;
+            font-weight: normal;
+            font-size: 9px;
+            color: #fff;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, .8);
+            
+            -webkit-border-radius: 2px 2px 0 0;
+        	   -moz-border-radius: 2px 2px 0 0;
+        			border-radius: 2px 2px 0 0;
+            
+            background-color: #555555;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#555555), to(#2c2c2c)); /* Saf4+, Chrome */
+            background-image: -webkit-linear-gradient(top, #555555, #2c2c2c); /* Chrome 10+, Saf5.1+, iOS 5+ */
+            background-image:    -moz-linear-gradient(top, #555555, #2c2c2c); /* FF3.6 */
+            background-image:     -ms-linear-gradient(top, #555555, #2c2c2c); /* IE10 */
+            background-image:      -o-linear-gradient(top, #555555, #2c2c2c); /* Opera 11.10+ */
+            background-image:         linear-gradient(top, #555555, #2c2c2c);
+                      filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#555555', EndColorStr='#2c2c2c'); /* IE6-IE9 */
+            
+        }
 
 
 
@@ -162,6 +276,16 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
 /* Quick triggering if positioning context */
 .rblock { display: block; position: relative; }
 .riblock { display: inline-block; position: relative; }
+
+.noselect {
+	-webkit-user-select: none;
+	 -khtml-user-select: none;
+	   -moz-user-select: none;
+		 -o-user-select: none;
+			user-select: none;
+			
+	cursor: default;
+}
 
 /*
  * Triggering hardware acceleration for smooth animations.

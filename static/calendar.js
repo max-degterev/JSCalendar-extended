@@ -1,8 +1,8 @@
 Calendar = function() {
 	var cal_days_labels = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'],
-		cal_months_labels = ['Январь', 'Февраль', 'Март', 'Апрель',
-		                   'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь',
-		                   'Октябрь', 'Ноябрь', 'Декабрь'],
+		cal_months_labels = ['январь', 'февраль', 'март', 'апрель',
+		                   'май', 'июнь', 'июль', 'август', 'сентябрь',
+		                   'октябрь', 'ноябрь', 'декабрь'],
 		now = new Date();
 		
 	return {
@@ -128,21 +128,23 @@ Calendar = function() {
 			return html;
 		},
 		generate: function(s) {
-		    var end_date,
+		    var e,
     		    t,
+    		    i,
+    		    fill_cells,
     		    html ='';
 
             t = new Date(s.start.year, s.start.month - 1);
-            end_date = new Date(s.end.year, s.end.month);
+            e = new Date(s.end.year, s.end.month);
             
             if (s.type === 'list') {
-                var fill_cells = t.getDay() - 1;
+                fill_cells = t.getDay() - 1;
     		    html = '<ul class="calendar-list'
     		    + (s.classes ? (' ' + s.classes) : '')
     		    + '">';
     		    
-    		    for(var i = 0; i < fill_cells; i++ ){
-                    html += '<li><\/li>';
+    		    for(i = 0; i < fill_cells; i++ ){
+                    html += '<li class="empty"><\/li>';
     			}
     		}
 
@@ -154,9 +156,13 @@ Calendar = function() {
                     html += this.generateTable(t.getMonth() + 1, t.getFullYear(), s.classes, s.labels);
                 }
                 t = new Date(t.getFullYear(), t.getMonth() + 1);
-            } while (t.getTime() != end_date.getTime())
+            } while (t.getTime() != e.getTime())
 
             if (s.type === 'list') {
+                fill_cells = 7 - (e.getDay() - 1);
+                for(i = 0; i < fill_cells; i++ ){
+                    html += '<li class="empty"><\/li>';
+    			}
 		        html += '<\/ul>';
     	    }
 		    

@@ -9,9 +9,19 @@
 <body>
     <div id="main">
         
-        <div class="calendar-wrap">
-            <div class="calendar">
-                <div class="calendar-list"><!-- Inserted by JS --></div>
+        <div class="calendar-wrap noselect">
+            <ul class="day-labels">
+                <li>пн</li>
+                <li>вт</li>
+                <li>ср</li>
+                <li>чт</li>
+                <li>пт</li>
+                <li class="weekend">сб</li>
+                <li class="weekend">вс</li>
+            </ul>
+            <div class="calendar-crop">
+                <div class="calendar"><!-- Inserted by JS --></div>
+                <span class="controls"><span class="slider"></span></span>
             </div>
         </div>
     </div>
@@ -20,7 +30,7 @@
     <script src="static/calendar.js"></script>
     <script src="static/script.js"></script>
     <script>
-        $('.calendar-list').append(Calendar.generate({
+        $('.calendar').append(Calendar.generate({
             start: {
                 month: 11,
                 year: 2011
