@@ -22,7 +22,7 @@ O.calendarSlider = function() {
         
     var c_height = calendar.height(),
         s_height = control.height(),
-        q = (s_height / c_height);
+        q = (c_height / s_height);
         
     //console.log(s_height, c_height, (s_height / c_height));
         
@@ -30,6 +30,10 @@ O.calendarSlider = function() {
         addClasses: false,
         axis: 'y',
         containment: 'parent'
+    });
+    
+    slider.bind('drag', function (event, ui) {
+        calendar.animate({top: -ui.position.top * q}, {duration: 200, queue: false});
     });
 };
 
