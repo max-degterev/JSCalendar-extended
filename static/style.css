@@ -209,9 +209,9 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
             color: #fff;
             text-shadow: 0 -1px 0 rgba(0, 0, 0, .8);
             
-            -webkit-border-radius: 0 0 2px 2px;
-        	   -moz-border-radius: 0 0 2px 2px;
-        			border-radius: 0 0 2px 2px;
+            -webkit-border-radius: 2px 2px 0 0;
+        	   -moz-border-radius: 2px 2px 0 0;
+        			border-radius: 2px 2px 0 0;
             
             background-color: #555555;
             background-image: -webkit-gradient(linear, left top, left bottom, from(#555555), to(#2c2c2c)); /* Saf4+, Chrome */
