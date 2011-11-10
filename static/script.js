@@ -26,6 +26,10 @@ O.calendarSlider = function() {
         q = (c_height / s_height),
         offset = control.offset().top;
         
+    var checkPosition = function(pos) {
+        return Math.min(Math.max(pos, 0), max)
+    };
+        
     slider.draggable({
         addClasses: false,
         axis: 'y',
@@ -33,13 +37,18 @@ O.calendarSlider = function() {
     });
     
     slider.bind('drag', function (e, ui) {
-        calendar.css({top: -ui.position.top * q});
+        calendar.css({top: -slider[0].offsetTop * q});
     });
     
     control.bind('click', function(e) {
-        var m = Math.min(Math.max(e.pageY - offset, 0), max);
+        var m = checkPosition(e.pageY - offset);
         slider.animate({top: m}, {duration: 200, queue: false});
         calendar.animate({top: -m * q}, {duration: 200, queue: false});
+    });
+    
+    cont.bind('mousewheel', function(e, d) {
+        var m = checkPosition((d > 0) ? (slider[0].offsetTop - 5) : (slider[0].offsetTop + 5));
+        slider.css({top: m}).trigger('drag')
     });
 };
 

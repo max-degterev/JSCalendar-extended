@@ -61,52 +61,58 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
     font-size: 13px;
     color: #000;
 }
-    .calendar-crop {
-        width: 295px;
+    .calendar-holder {
+        width: 290px;
         height: 200px;
-        
         position: relative;
-        overflow: hidden;
-        
+
         border-top: 1px solid #959595;
         border-bottom: 1px solid #959595;
     }
-        .calendar-crop:before,
-        .calendar-crop:after {
-            width: 240px;
-            height: 1px;
-
-            content: '';
-            display: block;
+        .calendar-crop {
+            width: 280px;
+            height: 200px;
             
-            position: absolute;
-            left: 20px;
-            top: 0;
-            
-            z-index: 500;
-
-            -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,1);
-               -moz-box-shadow: 0 0 10px 0 rgba(0,0,0,1);
-                    box-shadow: 0 0 10px 0 rgba(0,0,0,1);
-        }
-        .calendar-crop:after {
-            top: auto;
-            bottom: 0;
-        }
+            position: relative;
         
-        .calendar-crop .controls {
-            width: 9px;
+            overflow: hidden;
+        }
+            .calendar-crop:before,
+            .calendar-crop:after {
+                width: 240px;
+                height: 1px;
+
+                content: '';
+                display: block;
+            
+                position: absolute;
+                left: 20px;
+                top: -1px;
+            
+                z-index: 500;
+
+                -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,1);
+                   -moz-box-shadow: 0 0 10px 0 rgba(0,0,0,1);
+                        box-shadow: 0 0 10px 0 rgba(0,0,0,1);
+            }
+            .calendar-crop:after {
+                top: auto;
+                bottom: -1px;
+            }
+        
+        .calendar-holder .controls {
+            width: 7px;
             height: 100%;
             
             position: absolute;
-            right: 0;
+            right: -1px;
             top: 0;
             z-index: 550;
             
             background: transparent url('deals_cal_controls_bg.png') center 0 repeat-y;
         }
-            .calendar-crop .controls .slider {
-                width: 9px;
+            .calendar-holder .controls .slider {
+                width: 7px;
                 height: 41px;
                 
                 position: absolute;
@@ -115,7 +121,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
 
                 display: block;
                 cursor: pointer;
-                background: transparent url('sprite_deals.png') -4px -296px no-repeat;
+                background: transparent url('sprite_deals_calendar.png') 0 0 no-repeat;
             }
 
         .calendar {
@@ -170,7 +176,8 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
         border-left: 1px solid #c8c8c8;
         border-left: 1px solid rgba(0, 0, 0, .3);
     }
-    .calendar li[data-started].monday {
+    .calendar li[data-started].monday,
+    .calendar li[data-started].firstday {
         border-left: 1px solid #f0f0f0;
         border-left: 1px solid rgba(0, 0, 0, .05);
     }
@@ -190,8 +197,6 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
             min-width: 40px;
             height: 12px;
 
-            margin-top: -12px;
-
             position: absolute;
             right: 0;
             top: 0;
@@ -205,9 +210,9 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
             color: #fff;
             text-shadow: 0 -1px 0 rgba(0, 0, 0, .8);
             
-            -webkit-border-radius: 2px 2px 0 0;
-        	   -moz-border-radius: 2px 2px 0 0;
-        			border-radius: 2px 2px 0 0;
+            -webkit-border-radius: 0 0 2px 2px;
+        	   -moz-border-radius: 0 0 2px 2px;
+        			border-radius: 0 0 2px 2px;
             
             background-color: #555555;
             background-image: -webkit-gradient(linear, left top, left bottom, from(#555555), to(#2c2c2c)); /* Saf4+, Chrome */

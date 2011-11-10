@@ -13,7 +13,7 @@ Calendar = function() {
 				starting_day = first_day.getDay() ? (first_day.getDay() - 1) : 6, // Hacking this to make Monday the first day
 				month_length = this.getDaysNum(year, month),
 				month_name = cal_months_labels[month],
-				now_time = now.getTime();
+				now_time = +now;
 
 			var html = '<table class="calendar-table'
 			    + (classes ? (' ' + classes) : '')
@@ -43,12 +43,13 @@ Calendar = function() {
 			var day = 1;
 			// this loop is for is weeks (rows)
 			var len = Math.ceil((month_length + starting_day) / 7);
+			
+			var date_time = +(new Date(year, month, day));
 
 			for (var i = 0; i < len; i++) {
 				// this loop is for weekdays (cells)
 				for (var j = 0; j <= 6; j++) { 
-					var valid = (day <= month_length && (i > 0 || j >= starting_day)),
-					    date_time = new Date(year, month, day).getTime();
+					var valid = (day <= month_length && (i > 0 || j >= starting_day));
 
 					html += '<td class="calendar-day'
 					+ ((now_time > date_time) ? ' past' : '') + '"'
@@ -70,6 +71,8 @@ Calendar = function() {
 						html += '&nbsp;';
 					}
 					html += '<\/span><\/td>';
+					
+					date_time += 86400000;
 				}
 				// stop making rows if we've run out of days
 				if (day > month_length) {
@@ -82,25 +85,26 @@ Calendar = function() {
 
 			return html;
 		},
-		generateList: function(month, year, inject_month) {
+		generateList: function(month, year, inject_month, fm) {
 			var month = (isNaN(month) || month == null) ? now.getMonth() : month - 1;
 				year  = (isNaN(year) || year == null) ? now.getFullYear() : year,
 				month_length = this.getDaysNum(year, month),
-				now_time = now.getTime();
+				now_time = +now;
 
 			var html = '';
 
 			// fill in the days
-			var day = 1;
+			var day = 1,
+			    date = new Date(year, month, day),
+			    date_day = date.getDay(),
+			    date_time = +date;
 
 			for (; day <= month_length; day++) {
-				var date_obj = new Date(year, month, day),
-				    date_time = date_obj.getTime(),
-				    date_day = date_obj.getDay(),
-				    firstweek = (day <= 7);
+				var firstweek = (day <= 7);
 
 				html += '<li class="calendar-day'
-				+ (firstweek ? ' firstweek' : '')
+				+ (firstweek && !fm ? ' firstweek' : '')
+				+ ((day === 1 && fm) ? ' firstday' : '')
 				+ ((inject_month && (date_day === 0) && firstweek) ? ' monthlabel' : '')
 				+ ((date_day === 1) ? ' monday' : '')
 				+ ((date_day === 0 || date_day === 6) ? ' weekend' : '')
@@ -123,6 +127,11 @@ Calendar = function() {
 				+ '<\/span>'
                 + ((inject_month && (date_day === 0) && firstweek) ? '<strong>' + cal_months_labels[month] + '</strong>' : '')
 				+ '<\/li>';
+
+				date_time += 86400000; // 1000*60*60*24
+
+				date_day++;
+				(date_day > 6) && (date_day = 0);
 			}
 
 			return html;
@@ -132,7 +141,8 @@ Calendar = function() {
     		    t,
     		    i,
     		    fill_cells,
-    		    html ='';
+    		    html ='',
+    		    is_first_month = true;
 
             t = new Date(s.start.year, s.start.month - 1);
             e = new Date(s.end.year, s.end.month);
@@ -150,13 +160,14 @@ Calendar = function() {
 
             do {
                 if (s.type === 'list') {
-                    html += this.generateList(t.getMonth() + 1, t.getFullYear(), s.labels);
+                    html += this.generateList(t.getMonth() + 1, t.getFullYear(), s.labels, is_first_month);
                 }
                 else {
                     html += this.generateTable(t.getMonth() + 1, t.getFullYear(), s.classes, s.labels);
                 }
                 t = new Date(t.getFullYear(), t.getMonth() + 1);
-            } while (t.getTime() != e.getTime())
+                is_first_month = false;
+            } while (+t !== +e)
 
             if (s.type === 'list') {
                 fill_cells = 7 - (e.getDay() - 1);
