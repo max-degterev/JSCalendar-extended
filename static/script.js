@@ -4,7 +4,7 @@ $('.calendar').append(Calendar.generate({
         year: 2011
     },
     end: {
-        month: 10,
+        month: 2,
         year: 2012
     },
     classes: 'cf',
@@ -64,7 +64,7 @@ O.calendarSlider = function() {
     });
     
     cont.bind('mousewheel', function(e, d) {
-        var m = checkPosition((d > 0) ? (slider[0].offsetTop - 5) : (slider[0].offsetTop + 5));
+        var m = checkPosition((d > 0) ? (slider[0].offsetTop - 10) : (slider[0].offsetTop + 10));
 
         slider.css({top: m}).trigger('drag');
     });
