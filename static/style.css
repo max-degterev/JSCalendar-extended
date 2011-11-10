@@ -63,22 +63,21 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
 }
     .calendar-holder {
         width: 290px;
-        height: 200px;
         position: relative;
 
         border-top: 1px solid #959595;
         border-bottom: 1px solid #959595;
     }
-        .calendar-crop {
+        .calendar {
             width: 280px;
-            height: 200px;
+            height: 216px;
             
             position: relative;
         
             overflow: hidden;
         }
-            .calendar-crop:before,
-            .calendar-crop:after {
+            .calendar:before,
+            .calendar:after {
                 width: 240px;
                 height: 1px;
 
@@ -95,7 +94,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
                    -moz-box-shadow: 0 0 10px 0 rgba(0,0,0,1);
                         box-shadow: 0 0 10px 0 rgba(0,0,0,1);
             }
-            .calendar-crop:after {
+            .calendar:after {
                 top: auto;
                 bottom: -1px;
             }
@@ -124,7 +123,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
                 background: transparent url('sprite_deals_calendar.png') 0 0 no-repeat;
             }
 
-        .calendar {
+        .calendar-list {
             width: 280px;
             margin: -1px 0 0 -1px; /* borders compensation */
 
@@ -199,7 +198,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
 
             position: absolute;
             right: 0;
-            top: 0;
+            bottom: 100%;
 
             display: block;
 
