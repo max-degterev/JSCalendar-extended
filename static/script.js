@@ -16,7 +16,7 @@ var O = {};
 
 O.calendarSlider = function() {
     var cont = $('#n-calendar'),
-        calendar = cont.find('.n-calendar-list'),
+        calendar = cont.find('.calendar-list'),
         control = cont.find('.controls'),
         slider = control.find('.slider'),
         labels = calendar.find('li > strong'),
@@ -64,6 +64,7 @@ O.calendarSlider = function() {
     });
     
     cont.bind('mousewheel', function(e, d) {
+        e.preventDefault();
         var m = checkPosition((d > 0) ? (slider[0].offsetTop - 10) : (slider[0].offsetTop + 10));
 
         slider.css({top: m}).trigger('drag');

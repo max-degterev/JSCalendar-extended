@@ -123,7 +123,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
                 background: transparent url('sprite_deals_calendar.png') 0 0 no-repeat;
             }
 
-        .n-calendar-list {
+        .calendar-list {
             width: 280px;
             margin: -1px 0 0 -1px; /* borders compensation */
 

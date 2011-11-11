@@ -170,10 +170,12 @@ Calendar = function() {
             } while (+t !== +e)
 
             if (s.type === 'list') {
-                fill_cells = 7 - (e.getDay() - 1);
-                for(i = 0; i < fill_cells; i++ ){
-                    html += '<li class="empty"><\/li>';
-    			}
+                fill_cells = 7 - (new Date(e - 86400000)).getDay();
+                if (fill_cells < 7) {
+                    for(i = 0; i < fill_cells; i++ ){
+                        html += '<li class="empty"><\/li>';
+    			    }
+		        }
 		        html += '<\/ul>';
     	    }
 		    
