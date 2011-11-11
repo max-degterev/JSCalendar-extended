@@ -1,4 +1,4 @@
-$('.calendar').append(Calendar.generate({
+$('.n-calendar').append(Calendar.generate({
     start: {
         month: 11,
         year: 2011
@@ -15,8 +15,8 @@ $('.calendar').append(Calendar.generate({
 var O = {};
 
 O.calendarSlider = function() {
-    var cont = $('#calendar'),
-        calendar = cont.find('.calendar-list'),
+    var cont = $('#n-calendar'),
+        calendar = cont.find('.n-calendar-list'),
         control = cont.find('.controls'),
         slider = control.find('.slider'),
         labels = calendar.find('li > strong'),
