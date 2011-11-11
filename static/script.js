@@ -26,7 +26,8 @@ O.calendarSlider = function() {
         max = control.height() - s_height,
         max_calend = calendar.height() - cont.height(),
         offset = control.offset().top,
-        q = max_calend / max;
+        q = max_calend / max,
+        mouse_spd = 20;
 
     var checkPosition = function(pos) {
         return Math.min(Math.max(pos, 0), max);
@@ -65,7 +66,7 @@ O.calendarSlider = function() {
     
     cont.bind('mousewheel', function(e, d) {
         e.preventDefault();
-        var m = checkPosition((d > 0) ? (slider[0].offsetTop - 10) : (slider[0].offsetTop + 10));
+        var m = checkPosition((d > 0) ? (slider[0].offsetTop - mouse_spd) : (slider[0].offsetTop + mouse_spd));
 
         slider.css({top: m}).trigger('drag');
     });
