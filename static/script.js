@@ -1,4 +1,4 @@
-$('.calendar').append(Calendar.generate({
+$('.n-calendar').append(Calendar.generate({
     start: {
         month: 11,
         year: 2011
@@ -15,7 +15,7 @@ $('.calendar').append(Calendar.generate({
 var O = {};
 
 O.calendarSlider = function() {
-    var cont = $('#calendar'),
+    var cont = $('#n-calendar'),
         calendar = cont.find('.calendar-list'),
         control = cont.find('.controls'),
         slider = control.find('.slider'),
@@ -26,7 +26,8 @@ O.calendarSlider = function() {
         max = control.height() - s_height,
         max_calend = calendar.height() - cont.height(),
         offset = control.offset().top,
-        q = max_calend / max;
+        q = max_calend / max,
+        mouse_spd = 20;
 
     var checkPosition = function(pos) {
         return Math.min(Math.max(pos, 0), max);
@@ -64,7 +65,8 @@ O.calendarSlider = function() {
     });
     
     cont.bind('mousewheel', function(e, d) {
-        var m = checkPosition((d > 0) ? (slider[0].offsetTop - 10) : (slider[0].offsetTop + 10));
+        e.preventDefault();
+        var m = checkPosition((d > 0) ? (slider[0].offsetTop - mouse_spd) : (slider[0].offsetTop + mouse_spd));
 
         slider.css({top: m}).trigger('drag');
     });
