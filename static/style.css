@@ -108,7 +108,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
             top: 0;
             z-index: 550;
             
-            background: transparent url('deals_cal_controls_bg.png') center 0 repeat-y;
+            background: transparent url('deals_cal_controls_bg.png') repeat-y center 0;
         }
             .n-calendar-holder .controls .slider {
                 width: 7px;
@@ -120,7 +120,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
 
                 display: block;
                 cursor: pointer;
-                background: transparent url('sprite_deals_calendar.png') 0 0 no-repeat;
+                background: transparent url('sprite_deals_calendar.png') no-repeat 0 0;
             }
 
         .calendar-list {
