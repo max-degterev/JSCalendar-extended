@@ -148,7 +148,7 @@ Calendar = function() {
             e = new Date(s.end.year, s.end.month);
             
             if (s.type === 'list') {
-                fill_cells = t.getDay() - 1;
+                fill_cells = (t.getDay() ? t.getDay() : 7)  - 1;
     		    html = '<ul class="calendar-list'
     		    + (s.classes ? (' ' + s.classes) : '')
     		    + '">';
