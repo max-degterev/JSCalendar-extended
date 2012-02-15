@@ -1,11 +1,13 @@
+var now = new Date();
+
 $('.n-calendar').append(Calendar.generate({
     start: {
-        month: 11,
-        year: 2011
+        month: now.getMonth() - 1,
+        year: now.getFullYear()
     },
     end: {
-        month: 2,
-        year: 2012
+        month: now.getMonth() + 5,
+        year: now.getFullYear()
     },
     classes: 'cf',
     type: 'list',
