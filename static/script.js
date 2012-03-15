@@ -11,7 +11,8 @@ $('.n-calendar').append(Calendar.generate({
     },
     classes: 'cf',
     type: 'list',
-    labels: true
+    monthlabels: true,
+    nogaps: true
 }));
 
 var O = {};

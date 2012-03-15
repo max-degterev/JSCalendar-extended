@@ -4,26 +4,25 @@ Calendar = function() {
 		                   'май', 'июнь', 'июль', 'август', 'сентябрь',
 		                   'октябрь', 'ноябрь', 'декабрь'],
 		now = new Date();
-		
+
 	return {
-		generateTable: function(month, year, classes, labels) {
-			var month = (isNaN(month) || month == null) ? now.getMonth() : month - 1;
-				year  = (isNaN(year) || year == null) ? now.getFullYear() : year,
-			 	first_day = new Date(year, month, 1),
-				starting_day = first_day.getDay() ? (first_day.getDay() - 1) : 6, // Hacking this to make Monday the first day
+		generateTable: function(start, s) {
+			var month = start.getMonth(),
+				year = start.getFullYear(),
+				starting_day = start.getDay() ? (start.getDay() - 1) : 6, // Hacking this to make Monday the first day
 				month_length = this.getDaysNum(year, month),
 				month_name = cal_months_labels[month],
 				now_time = +now;
 
 			var html = '<table class="calendar-table'
-			    + (classes ? (' ' + classes) : '')
+			    + (s.classes ? (' ' + s.classes) : '')
 			    + '" cellspacing="0" cellpadding="0" data-month="'
 				+ (month + 1)
 				+ '" data-year="'
 				+ year
 				+ '">';
 
-			if (labels) {
+			if (s.daylabels) {
 			    html += '<thead><tr><th colspan="4">'
 			 	+ month_name + '<\/th><th class="calendar-year-label" colspan="3">' + year
 				+ '<\/th><\/tr><tr>';
@@ -39,12 +38,9 @@ Calendar = function() {
 			    html += '<tbody><tr>';
 			}
 
-			// fill in the days
-			var day = 1;
-			// this loop is for is weeks (rows)
-			var len = Math.ceil((month_length + starting_day) / 7);
-			
-			var date_time = +(new Date(year, month, day));
+			var day = start.getDate(),
+                len = Math.ceil((month_length + starting_day) / 7),
+                date_time = +start;
 
 			for (var i = 0; i < len; i++) {
 				// this loop is for weekdays (cells)
@@ -85,27 +81,26 @@ Calendar = function() {
 
 			return html;
 		},
-		generateList: function(month, year, inject_month, fm) {
-			var month = (isNaN(month) || month == null) ? now.getMonth() : month - 1;
-				year  = (isNaN(year) || year == null) ? now.getFullYear() : year,
+		generateList: function(start, s) {
+			var month = start.getMonth(),
+				year = start.getFullYear(),
 				month_length = this.getDaysNum(year, month),
 				now_time = +now;
 
 			var html = '';
 
 			// fill in the days
-			var day = 1,
-			    date = new Date(year, month, day),
-			    date_day = date.getDay(),
-			    date_time = +date;
+			var day = start.getDate(),
+			    date_day = start.getDay(),
+			    date_time = +start;
 
 			for (; day <= month_length; day++) {
 				var firstweek = (day <= 7);
 
 				html += '<li class="calendar-day'
-				+ (firstweek && !fm ? ' firstweek' : '')
-				+ ((day === 1 && fm) ? ' firstday' : '')
-				+ ((inject_month && (date_day === 0) && firstweek) ? ' monthlabel' : '')
+				+ (firstweek && !s.first_month ? ' firstweek' : '')
+				+ ((day === 1 && s.first_month) ? ' firstday' : '')
+				+ ((s.monthlabels && (date_day === 0) && firstweek) ? ' monthlabel' : '')
 				+ ((date_day === 1) ? ' monday' : '')
 				+ ((date_day === 0 || date_day === 6) ? ' weekend' : '')
 				+ ((now_time > date_time) ? ' past' : '') + '"'
@@ -125,7 +120,8 @@ Calendar = function() {
 				+ '><span>'
 				+ day
 				+ '<\/span>'
-                + ((inject_month && (date_day === 0) && firstweek) ? '<strong>' + cal_months_labels[month] + '</strong>' : '')
+                + ((s.daylabels) ? '<em>' + cal_days_labels[date_day ? date_day - 1 : 6] + '<\/em>' : '')
+                + ((s.monthlabels && (date_day === 0) && firstweek) ? '<strong>' + cal_months_labels[month] + '<\/strong>' : '')
 				+ '<\/li>';
 
 				date_time += 86400000; // 1000*60*60*24
@@ -141,41 +137,46 @@ Calendar = function() {
     		    t,
     		    i,
     		    fill_cells,
-    		    html ='',
-    		    is_first_month = true;
+    		    html ='';
 
-            t = new Date(s.start.year, s.start.month - 1);
+            t = new Date(s.start.year, s.start.month - 1, s.start.day || 1);
             e = new Date(s.end.year, s.end.month);
             
+            s.first_month = true;
+            
             if (s.type === 'list') {
-                fill_cells = (t.getDay() ? t.getDay() : 7)  - 1;
     		    html = '<ul class="calendar-list'
     		    + (s.classes ? (' ' + s.classes) : '')
     		    + '">';
     		    
-    		    for(i = 0; i < fill_cells; i++ ){
-                    html += '<li class="empty"><\/li>';
-    			}
+                if (s.nogaps) {
+                    fill_cells = (t.getDay() ? t.getDay() : 7)  - 1;
+        		    for(i = 0; i < fill_cells; i++ ){
+                        html += '<li class="empty"><\/li>';
+        			}
+                }
     		}
 
             do {
                 if (s.type === 'list') {
-                    html += this.generateList(t.getMonth() + 1, t.getFullYear(), s.labels, is_first_month);
+                    html += this.generateList(t, s);
                 }
                 else {
-                    html += this.generateTable(t.getMonth() + 1, t.getFullYear(), s.classes, s.labels);
+                    html += this.generateTable(t, s);
                 }
                 t = new Date(t.getFullYear(), t.getMonth() + 1);
-                is_first_month = false;
+                s.first_month = false;
             } while (+t !== +e)
 
             if (s.type === 'list') {
-                fill_cells = 7 - (new Date(e - 86400000)).getDay();
-                if (fill_cells < 7) {
-                    for(i = 0; i < fill_cells; i++ ){
-                        html += '<li class="empty"><\/li>';
-    			    }
-		        }
+                if (s.nogaps) {
+                    fill_cells = 7 - (new Date(e - 86400000)).getDay();
+                    if (fill_cells < 7) {
+                        for(i = 0; i < fill_cells; i++ ){
+                            html += '<li class="empty"><\/li>';
+        			    }
+    		        }
+                }
 		        html += '<\/ul>';
     	    }
 		    
